@@ -5,7 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AiAgentsLabServices</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
 <style>
+html {
+    scroll-behavior: smooth;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -20,11 +25,16 @@ body {
 }
 
 header {
+    position: sticky;
+    top: 0;
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(10px);
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 20px 10%;
     border-bottom: 1px solid #E5E5EA;
+    z-index: 1000;
 }
 
 .logo {
@@ -37,15 +47,21 @@ nav a {
     text-decoration: none;
     color: #111111;
     font-weight: 500;
+    transition: opacity 0.3s ease;
+}
+
+nav a:hover {
+    opacity: 0.6;
 }
 
 .hero {
     text-align: center;
-    padding: 120px 20px;
+    padding: 140px 20px;
+    animation: fadeUp 1s ease forwards;
 }
 
 .hero h1 {
-    font-size: 48px;
+    font-size: 52px;
     font-weight: 700;
     margin-bottom: 20px;
 }
@@ -57,11 +73,12 @@ nav a {
 }
 
 .button {
-    padding: 12px 24px;
+    padding: 12px 26px;
     border-radius: 8px;
     text-decoration: none;
     margin: 0 10px;
     font-weight: 600;
+    transition: all 0.3s ease;
 }
 
 .primary {
@@ -69,18 +86,35 @@ nav a {
     color: white;
 }
 
+.primary:hover {
+    background: #1d4ed8;
+}
+
 .secondary {
     border: 1px solid #111111;
     color: #111111;
 }
 
+.secondary:hover {
+    background: #111111;
+    color: white;
+}
+
 .section {
     padding: 100px 10%;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s ease;
+}
+
+.section.show {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .section-title {
     font-size: 28px;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
 }
 
 .grid {
@@ -92,7 +126,12 @@ nav a {
 .card {
     padding: 30px;
     background: #F5F5F7;
-    border-radius: 12px;
+    border-radius: 16px;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
 }
 
 .card h3 {
@@ -107,15 +146,41 @@ nav a {
 
 .work img {
     width: 100%;
-    border-radius: 12px;
+    border-radius: 16px;
+    transition: transform 0.3s ease;
+}
+
+.work img:hover {
+    transform: scale(1.02);
+}
+
+.contact {
+    text-align: center;
+}
+
+.contact p {
+    color: #6B7280;
+    margin-bottom: 30px;
 }
 
 .footer {
     text-align: center;
-    padding: 40px;
+    padding: 50px;
     border-top: 1px solid #E5E5EA;
     color: #6B7280;
     font-size: 14px;
+}
+
+/* Animation */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 </style>
 </head>
@@ -125,20 +190,20 @@ nav a {
 <header>
 <div class="logo">AiAgentsLabServices</div>
 <nav>
-<a href="#">Services</a>
-<a href="#">Work</a>
-<a href="#">Contact</a>
+<a href="#services">Services</a>
+<a href="#work">Work</a>
+<a href="#contact">Contact</a>
 </nav>
 </header>
 
 <section class="hero">
 <h1>AI systems for modern businesses.</h1>
 <p>Automation. Agents. SaaS. Built properly.</p>
-<a href="#" class="button secondary">View Work</a>
-<a href="#" class="button primary">Start a Project</a>
+<a href="#work" class="button secondary">View Work</a>
+<a href="#contact" class="button primary">Start a Project</a>
 </section>
 
-<section class="section">
+<section class="section" id="services">
 <h2 class="section-title">What we build.</h2>
 <div class="grid">
 <div class="card">
@@ -168,20 +233,42 @@ nav a {
 </div>
 </section>
 
-<section class="section work">
+<section class="section work" id="work">
 <h2 class="section-title">Selected Work.</h2>
 <div class="grid">
-<img src="https://via.placeholder.com/600x400" alt="Project 1">
-<img src="https://via.placeholder.com/600x400" alt="Project 2">
-<img src="https://via.placeholder.com/600x400" alt="Project 3">
+<img src="https://via.placeholder.com/600x400" alt="">
+<img src="https://via.placeholder.com/600x400" alt="">
+<img src="https://via.placeholder.com/600x400" alt="">
 </div>
+</section>
+
+<section class="section contact" id="contact">
+<h2 class="section-title">Start a project.</h2>
+<p>Tell us what you're building.</p>
+<a href="mailto:your@email.com" class="button primary">Email Us</a>
 </section>
 
 <div class="footer">
 AiAgentsLabServices — AI Systems Studio  
 <br><br>
-Contact: your@email.com
+© 2026 All rights reserved.
 </div>
+
+<script>
+const sections = document.querySelectorAll('.section');
+
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if(entry.isIntersecting){
+            entry.target.classList.add('show');
+        }
+    });
+}, { threshold: 0.2 });
+
+sections.forEach(section => {
+    observer.observe(section);
+});
+</script>
 
 </body>
 </html>
